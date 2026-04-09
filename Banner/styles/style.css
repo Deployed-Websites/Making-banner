@@ -13,7 +13,7 @@
     top:400px;
     left:600px;
     width:456.67px;
-    height:114.17px;
+    height:calc(0.562444641275465*456.67px);
     border-style: solid;
     border-radius:6px;
     border-color: #bed4df;
