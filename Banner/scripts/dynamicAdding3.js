@@ -45,7 +45,7 @@ function DynamicPopulating(amount,content,clear){
         let number = document.createElement("span")
         number.textContent = content
         number.style.fontSize = "20px";
-        number.style.color = "#9C9795"
+        number.style.color = "#9C9795gp"
         console.log(number.style.color)
         const computedStyles = globalThis.getComputedStyle(box[0]);
         let maxDisplacementHorizontal = Number.parseFloat(computedStyles.width)-60
