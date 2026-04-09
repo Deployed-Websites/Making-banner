@@ -1,4 +1,7 @@
-
+:root{
+    --factor: 0.562444641275465;
+    --width: 456.67px;
+}
 @keyframes spin {
     from{
         transform:rotate(0deg);
@@ -12,8 +15,8 @@
     position:absolute;
     top:400px;
     left:600px;
-    width:456.67px;
-    height:calc(0.562444641275465*456.67px);
+    width:var(--width);
+    height:calc(var(--factor) * var(--width));
     border-style: solid;
     border-radius:6px;
     border-color: #bed4df;
