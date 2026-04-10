@@ -8,8 +8,22 @@
 
 
 const box = document.getElementsByClassName("box")
+let cut;
+let positions;
+function isTooClose(x, y, minDistance = 30) {
+    for (const pos of positions) {
+        const dx = pos.x - x;
+        const dy = pos.y - y;
+        const distance = Math.hypot(dx, dy);
+
+        if (distance < minDistance) {
+            return true;
+        }
+    }
+    return false;
+}
 function changeColor() {
-    const cut = document.createElement("div")
+    cut = document.createElement("div")
     cut.style.position = "absolute";
     cut.style.width="100%";
     cut.style.height="100%";
@@ -34,36 +48,38 @@ function changeColor() {
 
 
 function DynamicPopulating(amount,content,clear){
-
+    positions = [];
     if(clear){
         box[0].innerHTML = "";
     }
     changeColor();
-    let AngleToRotateBy = Math.floor((Math.random()*360)+1)
     for (let i = 0; i < amount; i++) {
-        AngleToRotateBy = Math.floor((Math.random()*360)+1)
-        let number = document.createElement("span")
-        number.textContent = content
+        let number = document.createElement("span");
+        number.textContent = content;
         number.style.fontSize = "20px";
-        number.style.color = "#9C9795gp"
-        console.log(number.style.color)
+        number.style.color = "#9C9795gp";
+        console.log(number.style.color);
         const computedStyles = globalThis.getComputedStyle(box[0]);
-        let maxDisplacementHorizontal = Number.parseFloat(computedStyles.width)-60
+        let maxDisplacementHorizontal = Number.parseFloat(computedStyles.width)-Number.parseFloat(number.style.fontSize)
         let randomisedplacement = Math.floor((Math.random()*maxDisplacementHorizontal)+1)
+
         let makeIntoString = randomisedplacement+"px"
 
-        let maxDisplacementVertical = Number.parseFloat(computedStyles.height) - 30
+        let maxDisplacementVertical = Number.parseFloat(computedStyles.height) - Number.parseFloat(number.style.fontSize)
         let randomisedplacement2 = Math.floor((Math.random()*maxDisplacementVertical)+1)
         let makeIntoString2 = randomisedplacement2+"px"
 
-
-        number.style.position = "absolute"
-        number.style.top = makeIntoString2
-        number.style.left = makeIntoString
-        let ConvertAngleToRotateToString = AngleToRotateBy+"deg"
-        number.style.rotate = ConvertAngleToRotateToString
-        number.style.zIndex = "5";
-        box[0].appendChild(number)
+        const currentCoords = (randomisedplacement,randomisedplacement2);
+        if(isTooClose(currentCoords[0],currentCoords[1])){
+            i--;
+        }else{
+            positions.push(currentCoords);
+            number.style.position = "absolute"
+            number.style.top = makeIntoString2
+            number.style.left = makeIntoString
+            number.style.zIndex = "5";
+            box[0].appendChild(number)
+        }
 
     }
 }
@@ -102,14 +118,14 @@ const picker = document.getElementById("colourPicker")
 const colourPickerForSymbols = document.getElementById("colourPickerForSymbols")
 
 picker.addEventListener("input", () => {
-    box[0].style.backgroundColor = picker.value
-    box[0].style.borderColor = picker.value
+    cut.style.backgroundColor = picker.value
+    cut.style.borderColor = picker.value
 })
 
 let Resetbackground = document.getElementById("reset")
 Resetbackground.addEventListener("click", () => {
-    box[0].style.backgroundColor = "#426f86"
-    box[0].style.borderColor = "#426f86"
+    cut.style.backgroundColor = "#426f86"
+    cut.style.borderColor = "#426f86"
 })
 
 colourPickerForSymbols.addEventListener("input", () => {
